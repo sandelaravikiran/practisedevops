@@ -982,6 +982,31 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
 .footer-legal a:hover { color: var(--accent); }
 
 /* ========================================
+   FLOATING WHATSAPP
+   ======================================== */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 999;
+  width: 52px;
+  height: 52px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.floating-whatsapp:hover {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 8px 30px rgba(37,211,102,0.6);
+  background: #20ba5a;
+}
+
+/* ========================================
    BACK TO TOP
    ======================================== */
 .back-to-top {

@@ -204,6 +204,8 @@ if (form) {
     e.preventDefault();
     const name  = document.getElementById('contact-name').value.trim();
     const email = document.getElementById('contact-email-input').value.trim();
+    const phone = document.getElementById('contact-phone-input') ? document.getElementById('contact-phone-input').value.trim() : '';
+    const subject = document.getElementById('contact-subject') ? document.getElementById('contact-subject').value : 'Appliance Inquiry';
     const msg   = document.getElementById('contact-message').value.trim();
 
     if (!name || !email || !msg) {
@@ -216,13 +218,38 @@ if (form) {
     }
 
     const submitBtn = document.getElementById('contact-submit-btn');
-    submitBtn.textContent = 'Sending...';
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="btn-text">Sending Booking...</span>';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
+    // Send real email to ravikiran3351@gmail.com via FormSubmit AJAX (100% Free)
+    fetch("https://formsubmit.co/ajax/ravikiran3351@gmail.com", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        "Customer Name": name,
+        "Customer Phone": phone || "Not provided",
+        "Customer Email": email,
+        "Appliance / Service": subject,
+        "Issue / Address": msg,
+        "_subject": "⚡ New Appliance Booking: " + subject + " - " + name,
+        "_template": "table"
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
       form.classList.add('hidden');
       successEl.classList.remove('hidden');
-    }, 1200);
+    })
+    .catch(err => {
+      console.error('Submission error:', err);
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+      showFormError('Could not send online. Please call or WhatsApp us directly at +91 9398267057.');
+    });
   });
 }
 
